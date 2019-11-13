@@ -31,12 +31,31 @@ public class BlogPost implements Commentable {
         }
 
         if(!isAdded) {
-
+            String[] placeholder = new String[bannedWords.length + 1];
+            for(int i = 0; i < bannedWords.length; i++) {
+                placeholder[i] = bannedWords[i];
+            }
+            placeholder[placeholder.length - 1] = bannedWord;
+            bannedWords = placeholder;
         }
     }
 
     public void removeBannedWord(String bannedWord){
+        boolean isBanned = false;
+        String[] placeholder = new String[bannedWords.length - 1];
+        for(int i = 0; i < bannedWords.length; i++) {
+            if(!bannedWords[i].equals(bannedWord)){
+                if(isBanned) {
+                    placeholder[i - 1] = bannedWords[i];
+                } else {
+                    placeholder[i] = bannedWords[i];
+                }
+            } else {
+                isBanned = true;
+            }
+        }
 
+        if(isBanned) bannedWords = placeholder;
     }
 
     private Boolean isBannedWord(){
